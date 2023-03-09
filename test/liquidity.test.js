@@ -1,8 +1,8 @@
 const { expect } = require("chai");
 const { ethers } = require("hardhat");
 
-const DAI = "0x5CcBbbc0448d3903Aa9292634F197556f6AC953B";
-const USDC = "0x233E050D18f305DFCc6316de35cc98d3A162EB62";
+// const DAI = "0x5CcBbbc0448d3903Aa9292634F197556f6AC953B";
+// const USDC = "0x233E050D18f305DFCc6316de35cc98d3A162EB62";
 const PRIVATE_KEY = "ADD YOUR PRIVATE KEY";
 
 const liquidAddress = "0xa3c7Ce58943845d8Bfc48ae4A39DaA8980D7326a";
@@ -20,19 +20,35 @@ describe("LiquidityExamples", () => {
     const wallet = new ethers.Wallet(PRIVATE_KEY, provider);
     accounts = [wallet];
 
+    const DAI = await ethers.getContractFactory("CollieCoin");
+    dai = await DAI.deploy();
+    await dai.deployed();
+
+    const USDC = await ethers.getContractFactory("PugCoin");
+    usdc = await USDC.deploy();
+    await usdc.deployed();
+
     const LiquidityExamples = await ethers.getContractFactory(
       "LiquidityExamples"
     );
     liquidityExamples = await LiquidityExamples.deploy();
     await liquidityExamples.deployed();
 
+    await dai
+      .connect(accounts[0])
+      .mint(accounts[0].address, "1000000000000000000000");
+
+    await usdc
+      .connect(accounts[0])
+      .mint(accounts[0].address, "1000000000000000000000");
+
     // liquidityExamples = await ethers.getContractAt(
     //   "LiquidityExamples",
     //   liquidAddress
     // );
 
-    dai = await ethers.getContractAt("CollieCoin", DAI);
-    usdc = await ethers.getContractAt("PugCoin", USDC);
+    // dai = await ethers.getContractAt("CollieCoin", DAI);
+    // usdc = await ethers.getContractAt("PugCoin", USDC);
   }, 900000);
 
   it("mintNewPosition", async () => {
