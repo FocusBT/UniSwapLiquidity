@@ -16,24 +16,24 @@ describe("LiquidityExamples", () => {
     const provider = new ethers.providers.JsonRpcProvider(
       "https://goerli.infura.io/v3/bd9db9e900d142cfb1a3403c88aa6a4a"
     );
-
+    // connecting wallet using private key
     const wallet = new ethers.Wallet(PRIVATE_KEY, provider);
     accounts = [wallet];
-
+    // deploying first token called DAI(CC)
     const DAI = await ethers.getContractFactory("CollieCoin");
     dai = await DAI.deploy();
     await dai.deployed();
-
+    // deploying secound token called USDC(PG)
     const USDC = await ethers.getContractFactory("PugCoin");
     usdc = await USDC.deploy();
     await usdc.deployed();
-
+    // deploying main contract
     const LiquidityExamples = await ethers.getContractFactory(
       "LiquidityExamples"
     );
     liquidityExamples = await LiquidityExamples.deploy();
     await liquidityExamples.deployed();
-
+    // minting intial token to current wallet
     await dai
       .connect(accounts[0])
       .mint(accounts[0].address, "1000000000000000000000");
