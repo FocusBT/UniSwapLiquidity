@@ -3,7 +3,7 @@
 ---
 
 ```bash
-npm ci ; npx hardhat compile ; npx hardhat test --network goerli
+npm i ; npx hardhat compile ; npx hardhat test --network goerli
 ```
 
 ---
@@ -11,7 +11,7 @@ npm ci ; npx hardhat compile ; npx hardhat test --network goerli
 ### Steps to run the test
 
 ```bash
-npm ci
+npm i
 ```
 
 ```bash
